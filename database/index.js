@@ -2,28 +2,22 @@ var mysql = require('mysql');
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  database: 'yumpSF'
+  database: 'yumpSF',
+  user: 'root'
 });
 
 var addRestaurant = function (name, callback) {
-  connection.query('INSERT INTO restaurants (name) VALUES (?)', [name], (error, results, fields) => {
-    if (error) {
-      callback(error);
-    } else {
-      callback(null, results);
-    }
-  });
+  connection.query('INSERT INTO restaurants (name) VALUES (?)', [name], callback);
 }
 
 var getDishes = function (restaurantName, callback) {
-  var queryStr = 'SELECT restaurants.name, dishes.name, dishes.price, dishes.description, dishes.reviews, photos.url, photos.caption FROM restaurants INNER JOIN dishes ON dishes.restaurant_id = restaurants.id INNER JOIN dishes_photos ON dishes_photos.dishes_id = dishes.id INNER JOIN photos ON photos.id = dishes_photos.photos_id WHERE restaurants.name = ?';
-  connection.query(queryStr, [restaurantName], (error, results, fields) => {
-    if (error) {
-      callback(error);
-    } else {
-      callback(null, results);
-    }
-  });
+  var queryStr = 'SELECT dishes.id, dishes.name, dishes.price, dishes.description, dishes.reviews, photos.url, photos.caption FROM restaurants INNER JOIN dishes ON dishes.restaurant_id = restaurants.id INNER JOIN dishes_photos ON dishes_photos.dishes_id = dishes.id INNER JOIN photos ON photos.id = dishes_photos.photos_id WHERE restaurants.name = ? LIMIT 25';
+  connection.query(queryStr, [restaurantName], callback);
 }
 
-module.exports = { addRestaurant, getDishes }
+var getPhotosForDish = function (restaurantName, dishName, callback) {
+  // define the query with the given inputs!!!
+  // PICK UP HERE
+}
+
+module.exports = { addRestaurant, getDishes, getPhotosForDish }
