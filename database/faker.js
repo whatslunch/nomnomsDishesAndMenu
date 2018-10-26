@@ -1,6 +1,12 @@
 var faker = require('faker');
 var fs = require('fs');
 
+// 100 restaurants
+// 15 dishes per restaurant
+// 2999 photos
+// 1485 dishes
+// 3998 entries in dishes_photos
+
 // SEED restaurant table ********************************************************************
 var randomRestName;
 var randomDishName;
@@ -65,7 +71,35 @@ for (var m = 1; m < 3000; m++) {
 
 }
 
-// work on photos_dishes!!
+// SEED dishes_photos table *************************************************************************
+
+// I think I have it set up so that there are at least some records that demonstrate the many to many relationship
+// and no records repeat each other
+
+// add photo ids 1 - 1484 & dishes ids 1 - 1484
+for (var n = 1; n < 1485; n++) {
+  fs.appendFile('./database/schema.sql', `INSERT INTO dishes_photos (photos_id, dishes_id) VALUES (${n}, ${n}); \n`, (err) => {
+    if (err) throw err;
+    console.log('photos_dishes info was appended to the file!');
+  });
+
+}
+
+for (var b = 1485; b < 3000; b++) {
+  fs.appendFile('./database/schema.sql', `INSERT INTO dishes_photos (photos_id, dishes_id) VALUES (${b}, ${getRandomInt(1484)}); \n`, (err) => {
+    if (err) throw err;
+    console.log('photos_dishes info was appended to the file!');
+  });
+}
+
+// add more entries, so that photo_ids point to more than one dish 
+for (var n = 1; n < 1000; n++) {
+  fs.appendFile('./database/schema.sql', `INSERT INTO dishes_photos (photos_id, dishes_id) VALUES (${n}, ${n + 1}); \n`, (err) => {
+    if (err) throw err;
+    console.log('photos_dishes info was appended to the file!');
+  });
+
+}
 
 
 
