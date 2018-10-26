@@ -1,7 +1,7 @@
 var faker = require('faker');
 var fs = require('fs');
 
-// SEED restaurant table
+// SEED restaurant table ********************************************************************
 var randomRestName;
 var randomDishName;
 var randomDishDescription;
@@ -16,7 +16,7 @@ while (x < 100) {
   x++;
 }
 
-//  SEED dishes table
+//  SEED dishes table ***********************************************************************
 var randomNum;
 var randomDescription;
 var precision = 100;
@@ -31,22 +31,41 @@ while (y < 100) {
 
     fs.appendFile('./database/schema.sql', `INSERT INTO dishes (restaurant_id, name, price, description) VALUES (${y}, "${randomDishName}", ${randomNum}, "${randomDescription}"); \n`, (err) => {
       if (err) throw err;
-      console.log('dishe info was appended to the file!');
+      console.log('dish info was appended to the file!');
     });
   }
   y++;
 }
 
-// SEED photos table
-var filePathBase = 'https://s3.us-east-2.amazonaws.com/yelpsfphotos/';
-var photoURLs = ['download (1).jpeg', 'download.jpeg', 'images (1).jpeg', 'images (10).jpeg', 'images (11).jpeg', 'images (12).jpeg', 'images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg', 'images (16).jpeg', 'images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg', 'images (2).jpeg', 'images (20).jpeg', 'images (21).jpeg', 'images (22).jpeg', 'images (23).jpeg', 'images (24).jpeg', 'images (25).jpeg', 'images (26).jpeg', 'images (27).jpeg', 'images (28).jpeg', 'images (29).jpeg', 'images (3).jpeg', 'images (30).jpeg', 'images (31).jpeg', 'images (5).jpeg', 'images (6).jpeg', 'images (7).jpeg', 'images (8).jpeg', 'images (9).jpeg', 'images.jpeg', 'ls.jpg'];
+// SEED photos table *************************************************************************
 
-var urlsWithBase = photoURLs.map(url => {
-  return filePathBase + url;
-});
+// create array with urls for the photos
+var filePathBase = 'https://s3.us-east-2.amazonaws.com/yumpsfphotos/'
+var photoURLs = [];
+for (var i = 1; i < 36; i++) {
+  photoURLs.push(filePathBase + i + '.jpeg');
+}
 
-// photoURLS length is 34... loop through these a few times to insert rows for photos after dinner!
+// i have almost 1500 dishes (15 per restaurant, and 100 restaurants), want to be able to have 2 photos per dish, so should make  3000 photo entries
+var randomPhotoURL;
+var caption;
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+for (var m = 1; m < 3000; m++) {
+  randomPhotoURL = photoURLs[getRandomInt(34)];
+  caption = faker.lorem.words();
+
+  fs.appendFile('./database/schema.sql', `INSERT INTO photos (url, caption) VALUES ("${randomPhotoURL}", "${caption}"); \n`, (err) => {
+    if (err) throw err;
+    console.log('photo info was appended to the file!');
+  });
+
+}
+
+// work on photos_dishes!!
 
 
 
