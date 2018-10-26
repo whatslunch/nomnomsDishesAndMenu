@@ -7,6 +7,11 @@ var fs = require('fs');
 // 1485 dishes
 // 3998 entries in dishes_photos
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+
 // SEED restaurant table ********************************************************************
 var randomRestName;
 var randomDishName;
@@ -26,6 +31,7 @@ while (x < 100) {
 var randomNum;
 var randomDescription;
 var precision = 100;
+var randomNumOfReviews;
 
 var y = 1;
 while (y < 100) {
@@ -34,8 +40,9 @@ while (y < 100) {
     randomDishName = faker.lorem.word();
     randomDescription = faker.lorem.words();
     randomNum = Math.floor(Math.random() * (10 * precision - 1 * precision) + 1 * precision) / (1 * precision);
+    randomNumOfReviews = getRandomInt(100);
 
-    fs.appendFile('./database/schema.sql', `INSERT INTO dishes (restaurant_id, name, price, description) VALUES (${y}, "${randomDishName}", ${randomNum}, "${randomDescription}"); \n`, (err) => {
+    fs.appendFile('./database/schema.sql', `INSERT INTO dishes (restaurant_id, name, price, description, reviews) VALUES (${y}, "${randomDishName}", ${randomNum}, "${randomDescription}", ${randomNumOfReviews}); \n`, (err) => {
       if (err) throw err;
       console.log('dish info was appended to the file!');
     });
@@ -56,9 +63,6 @@ for (var i = 1; i < 36; i++) {
 var randomPhotoURL;
 var caption;
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
 
 for (var m = 1; m < 3000; m++) {
   randomPhotoURL = photoURLs[getRandomInt(34)];
