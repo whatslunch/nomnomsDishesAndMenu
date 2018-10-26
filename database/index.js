@@ -15,9 +15,11 @@ var getDishes = function (restaurantName, callback) {
   connection.query(queryStr, [restaurantName], callback);
 }
 
-var getPhotosForDish = function (restaurantName, dishName, callback) {
+var getPhotosForDish = function (restaurantName, dishId, callback) {
   // define the query with the given inputs!!!
   // PICK UP HERE
+  var queryStr = 'SELECT * from dishes_photos INNER JOIN dishes ON dishes_photos.dishes_id = dishes.id INNER JOIN restaurants ON restaurants.id = dishes.restaurant_id WHERE restaurants.name = ? AND dishes.id = ?';
+  connection.query(queryStr, [restaurantName, dishId], callback);
 }
 
 module.exports = { addRestaurant, getDishes, getPhotosForDish }
