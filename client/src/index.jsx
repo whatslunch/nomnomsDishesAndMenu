@@ -7,35 +7,38 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      restaurantId: 0,
-      menuItems: [],
-      top10MostPopular: []
+      restaurantName: 'iusto',
+      dishes: []
     }
-    this.getMenuItems = this.getMenuItems.bind(this);
-    this.updateTop10 = this.updateTop10.bind(this);
+    // this.getDishes = this.getDishes.bind(this);
   }
 
-  getMenuItems() {
-    $.ajax('/popular_dishes/:restaurant-name', {
-      success: (data) => {
-        this.setState({ menuItems: data });
-      }
-    });
-  }
+  // getDishes() {
+  //   $.ajax(`/menus/${this.state.restaurantName}`, {
+  //     method: 'GET',
+  //     success: (data) => {
+  //       this.setState({ dishes: data });
+  //     },
+  //     error: () => {
+  //       console.log('error from getDishes ajax request');
+  //     }
+  //   });
+  // }
 
-  updateTop10() {
-    // every time we add an item to the menu items, would need to invoke this to make sure we have the most recent top10
-  }
+  // getArrOfTop10() {
 
-  componentDidMount() {
-    this.getMenuItems();
-  }
+  // }
+
+  // componentDidMount() {
+  //   this.getDishes();
+  // }
 
 
   render() {
     return (
       <div>
-        The app will go here.
+        <h2>Popular Dishes at {this.state.restaurantName}</h2>
+        {/* {console.log('first dish obj=>>>>', this.state.dishes[0])} */}
       </div>
     )
   }

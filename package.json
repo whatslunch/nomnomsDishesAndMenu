@@ -13,6 +13,7 @@
     "seed-database": "node database/faker.js && mysql -u root < database/schema.sql"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "jquery": "^3.3.1",
