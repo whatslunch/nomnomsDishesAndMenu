@@ -13,9 +13,7 @@ class App extends React.Component {
       dishes: initialDishData,
       top10: initialDishData
     }
-
     this.getDishes = this.getDishes.bind(this);
-
   }
 
   getDishes() {
@@ -36,7 +34,6 @@ class App extends React.Component {
     // returns an array of the top 10 dishesObjects ranked by # of reviews
 
     function compare(a, b) {
-      // Use toUpperCase() to ignore character casing
       const reviewsA = a.reviews;
       const reviewsB = b.reviews;
 
@@ -57,17 +54,24 @@ class App extends React.Component {
     this.getDishes();
   }
 
-
   render() {
     return (
       <div>
         <h2>Popular Dishes at {this.state.restaurantName}</h2>
-        <span>
-          <PopularDish restaurantName={this.state.restaurantName} dish={this.state.dishes[0]} />
-        </span>
+
+        {this.state.top10.map(dishObj => {
+          return (
+            <span className='popularDish'>
+              <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
+            </span>
+          );
+        })}
       </div>
     )
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+
+// populardish className -- for each box around the popular dish component -- should be the rounded border

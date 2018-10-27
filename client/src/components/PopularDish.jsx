@@ -16,7 +16,6 @@ class PopularDish extends React.Component {
     $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`, {
       method: 'GET',
       success: (data) => {
-        console.log('data from ajax getNumberOfPHotos request>>>', data);
         this.setState({ numberOfPhotos: data.length });
       },
       error: () => {
@@ -31,7 +30,6 @@ class PopularDish extends React.Component {
 
 
   render() {
-    console.log('props.dish >>>>>>>>>>>>>', this.props.dish);
 
     return (
       <div>
