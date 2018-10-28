@@ -1,5 +1,6 @@
 var faker = require('faker');
 var fs = require('fs');
+var _ = require('underscore');
 
 // 100 restaurants
 // 15 dishes per restaurant
@@ -17,15 +18,23 @@ var randomRestName;
 var randomDishName;
 var randomDishDescription;
 
-var x = 0;
-while (x < 100) {
+// make an array of 100 unique restaurant names
+var arrOfRestNames = [];
+
+while (arrOfRestNames.length < 100) {
   randomRestName = faker.lorem.word();
-  fs.appendFile('./database/schema.sql', `INSERT INTO restaurants (name) VALUES ("${randomRestName}"); \n`, (err) => {
+  arrOfRestNames.push(randomRestName);
+  arrOfRestNames = _.uniq(arrOfRestNames);
+}
+
+arrOfRestNames.forEach((name) => {
+  fs.appendFile('./database/schema.sql', `INSERT INTO restaurants (name) VALUES ("${name}"); \n`, (err) => {
     if (err) throw err;
     console.log(`restaurant info was appended to file!`);
   });
-  x++;
-}
+});
+
+
 
 //  SEED dishes table ***********************************************************************
 var randomNum;
@@ -36,19 +45,51 @@ var randomNumOfReviews;
 var y = 1;
 while (y < 100) {
 
-  for (var z = 0; z < 15; z++) {
-    randomDishName = faker.lorem.word();
+  var randomDishNames = [];
+
+  while (randomDishNames.length < 15) {
+    randomDishNames.push(faker.lorem.word());
+    randoDishNames = _.uniq(randomDishNames);
+  }
+
+  for (var i = 0; i < randomDishNames.length; i++) {
     randomDescription = faker.lorem.words();
     randomNum = Math.floor(Math.random() * (10 * precision - 1 * precision) + 1 * precision) / (1 * precision);
     randomNumOfReviews = getRandomInt(100);
 
-    fs.appendFile('./database/schema.sql', `INSERT INTO dishes (restaurant_id, name, price, description, reviews) VALUES (${y}, "${randomDishName}", ${randomNum}, "${randomDescription}", ${randomNumOfReviews}); \n`, (err) => {
+    fs.appendFile('./database/schema.sql', `INSERT INTO dishes (restaurant_id, name, price, description, reviews) VALUES (${y}, "${randomDishNames[i]}", ${randomNum}, "${randomDescription}", ${randomNumOfReviews}); \n`, (err) => {
       if (err) throw err;
       console.log('dish info was appended to the file!');
     });
   }
+
   y++;
+
 }
+
+// var randomNum;
+// var randomDescription;
+// var precision = 100;
+// var randomNumOfReviews;
+
+// var y = 1;
+// while (y < 100) {
+
+//   var randomDishNames = [];
+
+//   for (var z = 0; z < 15; z++) {
+//     randomDishName = faker.lorem.word();
+//     randomDescription = faker.lorem.words();
+//     randomNum = Math.floor(Math.random() * (10 * precision - 1 * precision) + 1 * precision) / (1 * precision);
+//     randomNumOfReviews = getRandomInt(100);
+
+//     fs.appendFile('./database/schema.sql', `INSERT INTO dishes (restaurant_id, name, price, description, reviews) VALUES (${y}, "${randomDishName}", ${randomNum}, "${randomDescription}", ${randomNumOfReviews}); \n`, (err) => {
+//       if (err) throw err;
+//       console.log('dish info was appended to the file!');
+//     });
+//   }
+//   y++;
+// }
 
 // SEED photos table *************************************************************************
 

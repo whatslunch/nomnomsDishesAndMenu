@@ -76,7 +76,7 @@ class App extends React.Component {
 }
 
 
-ReactDOM.render(<App restaurantName='iusto' />, document.getElementById('app'));
+ReactDOM.render(<App restaurantName='saepe' />, document.getElementById('app'));
 
 
 // populardish className -- for each box around the popular dish component -- should be the rounded border
