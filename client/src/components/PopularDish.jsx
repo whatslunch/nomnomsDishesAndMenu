@@ -34,7 +34,8 @@ class PopularDish extends React.Component {
     return (
       <div>
         <img src={this.props.dish.url} alt="picture of food" height='250' width='300'></img>
-        <p>There are {this.state.numberOfPhotos} photos for this dish.</p>
+        <p><b>{this.props.dish.name}</b></p>
+        <p>{this.state.numberOfPhotos} photos - {this.props.dish.reviews} reviews</p>
       </div>
     );
   }

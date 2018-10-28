@@ -9,7 +9,10 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      restaurantName: 'iusto',
+      // when module gets hooked up to larger app, 
+      // it should have functionality that updates the state restaurantName/id
+      // on reload/componentDidMount, getDishes will be called to get the dishes for the given restaurant
+      restaurantName: this.props.restaurantName,
       dishes: initialDishData,
       top10: initialDishData
     }
@@ -22,6 +25,7 @@ class App extends React.Component {
       success: (data) => {
         this.setState({ dishes: data });
         var top10 = this.getTop10(data);
+        console.log('top10>>>', top10);
         this.setState({ top10: top10 });
       },
       error: () => {
@@ -59,9 +63,9 @@ class App extends React.Component {
       <div>
         <h2>Popular Dishes at {this.state.restaurantName}</h2>
 
-        {this.state.top10.map(dishObj => {
+        {this.state.top10.map((dishObj, index) => {
           return (
-            <span className='popularDish'>
+            <span id={index} className='popularDish'>
               <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
             </span>
           );
@@ -71,7 +75,8 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+
+ReactDOM.render(<App restaurantName='iusto' />, document.getElementById('app'));
 
 
 // populardish className -- for each box around the popular dish component -- should be the rounded border
