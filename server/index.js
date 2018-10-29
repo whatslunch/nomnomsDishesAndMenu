@@ -21,7 +21,7 @@ app.get('/menus/:restaurantName', (request, response) => {
     }
   });
 
-})
+});
 
 // the length of results we get back tells us how many different photos there are for the given dish at the given restaurant
 app.get('/menus/:restaurantName/dishes/:dishId/photos', (request, response) => {
@@ -56,4 +56,4 @@ app.get('/photos/:photoid', (request, response) => {
 
 app.listen(2000, () => {
   console.log('listening on port 2000');
-})
+});

@@ -16,7 +16,7 @@ class App extends React.Component {
       restaurantName: this.props.restaurantName,
       dishes: initialDishData,
       top10: initialDishData
-    }
+    };
     this.getDishes = this.getDishes.bind(this);
   }
 
@@ -39,7 +39,7 @@ class App extends React.Component {
   getTop10(dishes) {
     // returns an array of the top 10 dishesObjects ranked by # of reviews
 
-    function compare(a, b) {
+    var compare = (a, b) => {
       const reviewsA = a.reviews;
       const reviewsB = b.reviews;
 
@@ -50,7 +50,7 @@ class App extends React.Component {
         comparison = -1;
       }
       return comparison;
-    }
+    };
 
     var sortedDishes = dishes.sort(compare).reverse();
     return sortedDishes.slice(0, 10);
@@ -73,7 +73,7 @@ class App extends React.Component {
           );
         })}
       </div>
-    )
+    );
   }
 }
 
