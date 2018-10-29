@@ -2,17 +2,27 @@ var mysql = require('mysql');
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  database: 'yumpSF'
+  database: 'yumpSF',
+  user: 'root'
 });
 
 var addRestaurant = function (name, callback) {
-  connection.query('INSERT INTO restaurants (name) VALUES (?)', [name], (error, results, fields) => {
-    if (error) {
-      callback(error);
-    } else {
-      callback(null, results);
-    }
-  });
-}
+  connection.query('INSERT INTO restaurants (name) VALUES (?)', [name], callback);
+};
 
-module.exports = { addRestaurant }
+var getDishes = function (restaurantName, callback) {
+  var queryStr = 'SELECT * from dishes WHERE restaurant_id IN (SELECT id from restaurants where name = ?)';
+  connection.query(queryStr, [restaurantName], callback);
+};
+
+var getPhotosForDish = function (restaurantName, dishId, callback) {
+  var queryStr = 'SELECT * from dishes_photos WHERE dishes_id = ?';
+  connection.query(queryStr, [dishId], callback);
+};
+
+var getPhotoData = function (photoId, callback) {
+  var queryStr = 'SELECT * FROM photos WHERE id = ?';
+  connection.query(queryStr, [photoId], callback);
+};
+
+module.exports = { addRestaurant, getDishes, getPhotosForDish, getPhotoData };
