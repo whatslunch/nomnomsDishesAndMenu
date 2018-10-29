@@ -24,7 +24,7 @@ class App extends React.Component {
     $.ajax(`/menus/${this.state.restaurantName}`, {
       method: 'GET',
       success: (data) => {
-        // console.log('dishes for this restaurant>>>', data);
+        console.log('dishes for this restaurant>>>', data);
         this.setState({ dishes: data });
         var top10 = this.getTop10(data);
         console.log('top10>>>', top10);

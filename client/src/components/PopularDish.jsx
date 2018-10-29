@@ -24,6 +24,7 @@ class PopularDish extends React.Component {
         console.log('photos_id from first record>>>,', data[0].photos_id);
         $.ajax(`/photos/${data[0].photos_id}`, {
           success: (photoData) => {
+            console.log('photoData>>>', photoData);
             this.setState({ imgurl: photoData[0].url, impgCaption: photoData[0].caption });
           }
         });
