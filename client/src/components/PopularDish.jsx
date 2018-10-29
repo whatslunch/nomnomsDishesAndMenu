@@ -7,25 +7,33 @@ class PopularDish extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfPhotos: 0
+      numberOfPhotos: 0,
+      imgurl: '',
+      imgCaption: ''
     };
-    this.getNumberOfPhotos = this.getNumberOfPhotos.bind(this);
+    this.getPhotoData = this.getPhotoData.bind(this);
   }
 
-  getNumberOfPhotos() {
+  getPhotoData() {
     $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`, {
       method: 'GET',
       success: (data) => {
         this.setState({ numberOfPhotos: data.length });
+        console.log('photos_id from first record>>>,', data[0].photos_id);
+        $.ajax(`/photos/${data[0].photos_id}`, {
+          success: (photoData) => {
+            this.setState({ imgurl: photoData[0].url, impgCaption: photoData[0].caption });
+          }
+        });
       },
       error: () => {
-        console.log('error from getNumberOfPhotos ajax request');
+        console.log('error from getPhotoData ajax request');
       }
     });
   }
 
   componentDidMount() {
-    this.getNumberOfPhotos();
+    this.getPhotoData();
   }
 
 
@@ -33,7 +41,7 @@ class PopularDish extends React.Component {
 
     return (
       <div>
-        <img src={this.props.dish.url} alt="picture of food" height='250' width='300'></img>
+        <img src={this.state.imgurl} alt="picture of food" height='250' width='300'></img>
         <p><b>{this.props.dish.name}</b></p>
         <p>{this.state.numberOfPhotos} photos - {this.props.dish.reviews} reviews</p>
       </div>

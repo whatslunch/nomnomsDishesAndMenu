@@ -37,7 +37,22 @@ app.get('/menus/:restaurantName/dishes/:dishId/photos', (request, response) => {
     }
   });
 
-})
+});
+
+// use the id of the first record returned from photos, to search for its url
+app.get('/photos/:photoid', (request, response) => {
+
+  var photoId = request.params.photoid;
+
+  db.getPhotoData(photoId, (error, results) => {
+    if (error) {
+      response.status(500).send(error.message);
+    } else {
+      response.status(200).send(results);
+    }
+  });
+
+});
 
 app.listen(2000, () => {
   console.log('listening on port 2000');

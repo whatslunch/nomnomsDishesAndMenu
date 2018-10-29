@@ -49,7 +49,7 @@ while (y < 100) {
 
   while (randomDishNames.length < 15) {
     randomDishNames.push(faker.lorem.word());
-    randoDishNames = _.uniq(randomDishNames);
+    randomDishNames = _.uniq(randomDishNames);
   }
 
   for (var i = 0; i < randomDishNames.length; i++) {

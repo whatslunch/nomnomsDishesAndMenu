@@ -23,9 +23,10 @@ class App extends React.Component {
     $.ajax(`/menus/${this.state.restaurantName}`, {
       method: 'GET',
       success: (data) => {
+        // console.log('dishes for this restaurant>>>', data);
         this.setState({ dishes: data });
         var top10 = this.getTop10(data);
-        console.log('top10>>>', top10);
+        // console.log('top10>>>', top10);
         this.setState({ top10: top10 });
       },
       error: () => {
@@ -76,7 +77,7 @@ class App extends React.Component {
 }
 
 
-ReactDOM.render(<App restaurantName='saepe' />, document.getElementById('app'));
+ReactDOM.render(<App restaurantName='quis' />, document.getElementById('app'));
 
 
 // populardish className -- for each box around the popular dish component -- should be the rounded border
