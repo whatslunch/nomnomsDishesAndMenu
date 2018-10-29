@@ -12,6 +12,7 @@ class App extends React.Component {
       // when module gets hooked up to larger app, 
       // it should have functionality that updates the state restaurantName/id
       // on reload/componentDidMount, getDishes will be called to get the dishes for the given restaurant
+      // currently passin gin restaurant name where App Component is "called"/rendered to the DOM
       restaurantName: this.props.restaurantName,
       dishes: initialDishData,
       top10: initialDishData
@@ -26,7 +27,7 @@ class App extends React.Component {
         // console.log('dishes for this restaurant>>>', data);
         this.setState({ dishes: data });
         var top10 = this.getTop10(data);
-        // console.log('top10>>>', top10);
+        console.log('top10>>>', top10);
         this.setState({ top10: top10 });
       },
       error: () => {
@@ -76,8 +77,6 @@ class App extends React.Component {
   }
 }
 
+// if what gets passed in is a restaurant id, can easily pass that down and just update the state with the restaurant name
+ReactDOM.render(<App restaurantName='voluptas' />, document.getElementById('app'));
 
-ReactDOM.render(<App restaurantName='quis' />, document.getElementById('app'));
-
-
-// populardish className -- for each box around the popular dish component -- should be the rounded border
