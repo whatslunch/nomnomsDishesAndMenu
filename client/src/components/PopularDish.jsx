@@ -14,11 +14,13 @@ class PopularDish extends React.Component {
     this.getPhotoData = this.getPhotoData.bind(this);
   }
 
+
   getPhotoData() {
     $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`, {
       method: 'GET',
       success: (data) => {
         console.log('data>>>>', data);
+
         this.setState({ numberOfPhotos: data.length });
 
         console.log('photos_id from first record>>>,', data[0].photos_id);
