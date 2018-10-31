@@ -2,6 +2,51 @@ import React from 'react';
 import PopularDish from './PopularDish.jsx';
 import initialDishData from '../initialData.js';
 import axios from 'axios';
+import styled from 'styled-components';
+
+//*******STYLING *********************************/
+const Title = styled.div`
+  text-align: left;
+  vertical-align: bottom;
+  font-size: 21px;
+  color: #d32323;
+  font-family: verdana;
+  font-weight: bold;
+`;
+
+const FullMenu = styled.div`
+  font-family: arial;
+  font-size: 14px;
+  color: #0073bb;
+  vertical-align: bottom;
+  position: fixed;
+  right: 50px;
+`;
+
+const MainContainer = styled.div`
+  padding-left: 30px;
+`;
+
+const PopularDishesContainer = styled.div`
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PopularDishSpanHolder = styled.span`
+  padding-right: 15px;
+`;
+
+//  doesn't seem to work when added below ... justify-content: flex-end;
+const TitleMenuContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  position: fixed;
+`;
+
+
+//********************************************** */
+
 
 class App extends React.Component {
   constructor(props) {
@@ -57,16 +102,22 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <h2>Popular Dishes at {this.state.restaurantName}</h2>
 
-        {this.state.top10.map((dishObj) => (
-          <span key={dishObj.id} className='popularDish'>
-            <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
-          </span>)
-        )}
-      </div>
+    return (
+      <MainContainer id='main'>
+        <TitleMenuContainer>
+          <Title>Popular Dishes at {(this.state.restaurantName)[0].toUpperCase() + this.state.restaurantName.slice(1)}</Title>
+          <FullMenu>Full Menu</FullMenu>
+        </TitleMenuContainer>
+
+        <PopularDishesContainer>
+          {this.state.top10.map((dishObj) => (
+            <PopularDishSpanHolder key={dishObj.id} id={dishObj.id} className='popularDishSpan'>
+              <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
+            </PopularDishSpanHolder>)
+          )}
+        </PopularDishesContainer>
+      </MainContainer>
     );
   }
 }
