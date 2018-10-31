@@ -1,7 +1,7 @@
 import React from 'react';
-import $ from 'jquery';
 import PopularDish from './PopularDish.jsx';
 import initialDishData from '../initialData.js';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,19 +20,16 @@ class App extends React.Component {
   }
 
   getDishes() {
-    $.ajax(`/menus/${this.state.restaurantName}`, {
-      method: 'GET',
-      success: (data) => {
-        console.log('dishes for this restaurant>>>', data);
-        this.setState({ dishes: data });
-        var top10 = this.getTop10(data);
-        console.log('top10>>>', top10);
+
+    axios.get(`/menus/${this.state.restaurantName}`)
+      .then(data => {
+        // console.log('data line 40>>>', data.data);
+        this.setState({ dishes: data.data });
+        var top10 = this.getTop10(data.data);
+        // console.log('top10>>>', top10);
         this.setState({ top10: top10 });
-      },
-      error: () => {
-        console.log('error from getDishes ajax request');
-      }
-    });
+      })
+
   }
 
   getTop10(dishes) {
@@ -64,13 +61,11 @@ class App extends React.Component {
       <div>
         <h2>Popular Dishes at {this.state.restaurantName}</h2>
 
-        {this.state.top10.map((dishObj, index) => {
-          return (
-            <span id={index} className='popularDish'>
-              <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
-            </span>
-          );
-        })}
+        {this.state.top10.map((dishObj) => (
+          <span key={dishObj.id} className='popularDish'>
+            <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
+          </span>)
+        )}
       </div>
     );
   }
