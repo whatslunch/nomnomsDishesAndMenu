@@ -20,7 +20,7 @@ const FullMenu = styled.div`
   color: #0073bb;
   vertical-align: bottom;
   position: fixed;
-  right: 50px;
+  right: 75px;
 `;
 
 const MainContainer = styled.div`
@@ -44,6 +44,23 @@ const TitleMenuContainer = styled.div`
   position: fixed;
 `;
 
+const ScrollRight = styled.button`
+  height: 20px;
+  width: 30px;
+  border: none;
+  position: fixed;
+  right: 15px;
+  outline: none;
+`;
+
+const ScrollLeft = styled.button`
+  height: 20px;
+  width: 30px;
+  border: none;
+  position: fixed;
+  right: 40px;
+  outline: none;
+`;
 
 //********************************************** */
 
@@ -92,9 +109,16 @@ class App extends React.Component {
       }
       return comparison;
     };
-
     var sortedDishes = dishes.sort(compare).reverse();
     return sortedDishes.slice(0, 10);
+  }
+
+  scrollRight() {
+    console.log('clicked scroll right!');
+  }
+
+  scrollLeft() {
+    console.log('clicked scroll left!');
   }
 
   componentDidMount() {
@@ -108,6 +132,9 @@ class App extends React.Component {
         <TitleMenuContainer>
           <Title>Popular Dishes at {(this.state.restaurantName)[0].toUpperCase() + this.state.restaurantName.slice(1)}</Title>
           <FullMenu>Full Menu</FullMenu>
+          <ScrollRight onClick={this.scrollRight}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll right icon" width="100%" height="100%"></img></ScrollRight>
+          <ScrollLeft onClick={this.scrollLeft}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll left icon" width="100%" height="100%"></img></ScrollLeft>
+
         </TitleMenuContainer>
 
         <PopularDishesContainer>
