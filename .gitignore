@@ -23,4 +23,11 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
+public/
+public/bundle.js 
+bundle.js 
+
+# testing practice
+spec/components/subtract.test.js
+client/src/components/subtract.js 
 

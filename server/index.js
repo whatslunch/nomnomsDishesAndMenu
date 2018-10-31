@@ -28,6 +28,7 @@ app.get('/menus/:restaurantName/dishes/:dishId/photos', (request, response) => {
 
   var restaurantName = request.params.restaurantName;
   var dishId = request.params.dishId;
+  console.log('dishID being passed in with ajax request>>>', dishId);
 
   db.getPhotosForDish(restaurantName, dishId, (error, results) => {
     if (error) {

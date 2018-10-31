@@ -18,19 +18,21 @@ class PopularDish extends React.Component {
     $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`, {
       method: 'GET',
       success: (data) => {
-        console.log('data>>>>', data);
+        // console.log('data>>>>', data);
         this.setState({ numberOfPhotos: data.length });
-
-        console.log('photos_id from first record>>>,', data[0].photos_id);
+        // console.log('photos_id from first record>>>,', data[0].photos_id);
         $.ajax(`/photos/${data[0].photos_id}`, {
           success: (photoData) => {
-            console.log('photoData>>>', photoData);
+            // console.log('photoData>>>', photoData);
             this.setState({ imgurl: photoData[0].url, impgCaption: photoData[0].caption });
+          },
+          error: () => {
+            console.log('error from second ajax');
           }
         });
       },
       error: () => {
-        console.log('error from getPhotoData ajax request');
+        console.log('error from getPhotoData 1st ajax request');
       }
     });
   }
@@ -38,7 +40,6 @@ class PopularDish extends React.Component {
   componentDidMount() {
     this.getPhotoData();
   }
-
 
   render() {
 
