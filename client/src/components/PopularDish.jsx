@@ -45,7 +45,7 @@ class PopularDish extends React.Component {
 
     return (
       <div>
-        <img src={this.state.imgurl} alt="picture of food" height='250' width='300'></img>
+        <img src={this.state.imgurl} alt="picture of food" height='66%' width='100%'></img>
         <p><b>{this.props.dish.name}</b></p>
         <p>{this.state.numberOfPhotos} photos - {this.props.dish.reviews} reviews</p>
       </div>

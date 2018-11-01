@@ -3,12 +3,13 @@ import PopularDish from './PopularDish.jsx';
 import initialDishData from '../initialData.js';
 import axios from 'axios';
 import styled from 'styled-components';
+import $ from 'jquery';
 
 //*******STYLING *********************************/
 const Title = styled.div`
   text-align: left;
   vertical-align: bottom;
-  font-size: 21px;
+  font-size: 18px;
   color: #d32323;
   font-family: verdana;
   font-weight: bold;
@@ -29,12 +30,24 @@ const MainContainer = styled.div`
 
 const PopularDishesContainer = styled.div`
   padding-top: 40px;
-  display: flex;
-  justify-content: space-between;
-`;
+  vertical-align: middle;
+  display: inline-block;
+  width: 90%;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  `;
+// align-items: flex-start;
 
-const PopularDishSpanHolder = styled.span`
-  padding-right: 15px;
+const PopularDishSpanHolder = styled.div`
+  height: 175px;
+  width: 175px;
+  margin: 10px;
+  display: inline-block;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #666666;
+  border-width: thin;
 `;
 
 //  doesn't seem to work when added below ... justify-content: flex-end;
@@ -44,7 +57,7 @@ const TitleMenuContainer = styled.div`
   position: fixed;
 `;
 
-const ScrollRight = styled.button`
+const LeftArrow = styled.button`
   height: 20px;
   width: 30px;
   border: none;
@@ -53,7 +66,7 @@ const ScrollRight = styled.button`
   outline: none;
 `;
 
-const ScrollLeft = styled.button`
+const RightArrow = styled.button`
   height: 20px;
   width: 30px;
   border: none;
@@ -79,6 +92,7 @@ class App extends React.Component {
       top10: initialDishData
     };
     this.getDishes = this.getDishes.bind(this);
+    this.scroll = this.scroll.bind(this)
   }
 
   getDishes() {
@@ -113,12 +127,17 @@ class App extends React.Component {
     return sortedDishes.slice(0, 10);
   }
 
-  scrollRight() {
-    console.log('clicked scroll right!');
-  }
+  // scrollRight() {
+  //   console.log('clicked scroll right!');
+  // }
+  // scrollLeft() {
+  //   console.log('clicked scroll left!');
+  // }
 
-  scrollLeft() {
-    console.log('clicked scroll left!');
+  scroll(direction) {
+    let far = $('.popDishesContainer').width() / 2 * direction;
+    let pos = $('.popDishesContainer').scrollLeft() + far;
+    $('.popDishesContainer').animate({ scrollLeft: pos }, 350)
   }
 
   componentDidMount() {
@@ -132,12 +151,11 @@ class App extends React.Component {
         <TitleMenuContainer>
           <Title>Popular Dishes at {(this.state.restaurantName)[0].toUpperCase() + this.state.restaurantName.slice(1)}</Title>
           <FullMenu>Full Menu</FullMenu>
-          <ScrollRight onClick={this.scrollRight}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll right icon" width="100%" height="100%"></img></ScrollRight>
-          <ScrollLeft onClick={this.scrollLeft}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll left icon" width="100%" height="100%"></img></ScrollLeft>
-
+          <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
+          <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
         </TitleMenuContainer>
 
-        <PopularDishesContainer>
+        <PopularDishesContainer className='popDishesContainer'>
           {this.state.top10.map((dishObj) => (
             <PopularDishSpanHolder key={dishObj.id} id={dishObj.id} className='popularDishSpan'>
               <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
