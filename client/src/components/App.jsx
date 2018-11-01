@@ -32,7 +32,7 @@ const PopularDishesContainer = styled.div`
   padding-top: 40px;
   vertical-align: middle;
   display: inline-block;
-  width: 90%;
+  width: 98%;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;

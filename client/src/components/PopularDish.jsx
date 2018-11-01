@@ -2,6 +2,38 @@
 
 import React from 'react';
 import $ from 'jquery';
+import styled from 'styled-components';
+
+const MainDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 66%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-style: thin;
+  border-color: transparent;
+`;
+
+const DetailWrapper = styled.div`
+  width: 100%;
+  height: 34%;
+  padding-left: 3%;
+  vertical-align: center;
+  font-family: arial;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  .numPhotosReviews {
+    color: #666666;
+  }
+  `;
+
 
 class PopularDish extends React.Component {
   constructor(props) {
@@ -44,11 +76,15 @@ class PopularDish extends React.Component {
   render() {
 
     return (
-      <div>
-        <img src={this.state.imgurl} alt="picture of food" height='66%' width='100%'></img>
-        <p><b>{this.props.dish.name}</b></p>
-        <p>{this.state.numberOfPhotos} photos - {this.props.dish.reviews} reviews</p>
-      </div>
+      <MainDiv>
+        <Image src={this.state.imgurl} alt="picture of food"></Image>
+        <DetailWrapper>
+          <b>{this.props.dish.name}</b>
+          <div className='numPhotosReviews'>
+            {this.state.numberOfPhotos} photos - {this.props.dish.reviews} reviews
+          </div>
+        </DetailWrapper>
+      </MainDiv>
     );
   }
 }
