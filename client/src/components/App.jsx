@@ -38,6 +38,8 @@ const PopularDishesContainer = styled.div`
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+  ::-webkit-scrollbar {display:none;}
+
   `;
 // align-items: flex-start;
 
@@ -172,10 +174,12 @@ class App extends React.Component {
             )}
           </PopularDishesContainer>
 
-          <Modal show={this.state.show} handleClose={this.hideModal}>
-            <p>Modal</p>
+          <Modal show={this.state.show} handleClose={this.hideModal} restaurantName={this.state.restaurantName} />
+
+          {/* <Modal show={this.state.show} handleClose={this.hideModal}>
+            <p className="menuTitle">Menu for {this.state.restaurantName}</p>
             <p>Data</p>
-          </Modal>
+          </Modal> */}
 
         </MainContainer>
       );
