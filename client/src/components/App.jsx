@@ -8,6 +8,7 @@ import $ from 'jquery';
 //*******STYLING *********************************/
 const Title = styled.div`
   text-align: left;
+  padding-left: 10px;
   vertical-align: bottom;
   font-size: 18px;
   color: #d32323;
@@ -29,7 +30,7 @@ const MainContainer = styled.div`
 `;
 
 const PopularDishesContainer = styled.div`
-  padding-top: 40px;
+  padding-top: 30px;
   vertical-align: middle;
   display: inline-block;
   width: 98%;
@@ -46,8 +47,8 @@ const PopularDishSpanHolder = styled.div`
   display: inline-block;
   border-style: solid;
   border-radius: 5px;
-  border-color: #666666;
-  border-width: thin;
+  border-color: #999999;
+  border-width: .5px;
 `;
 
 //  doesn't seem to work when added below ... justify-content: flex-end;
@@ -149,10 +150,10 @@ class App extends React.Component {
     return (
       <MainContainer id='main'>
         <TitleMenuContainer>
-          <Title>Popular Dishes at {(this.state.restaurantName)[0].toUpperCase() + this.state.restaurantName.slice(1)}</Title>
+          <Title>Popular Dishes</Title>
           <FullMenu>Full Menu</FullMenu>
-          <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
-          <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
+          <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
+          <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
         </TitleMenuContainer>
 
         <PopularDishesContainer className='popDishesContainer'>
