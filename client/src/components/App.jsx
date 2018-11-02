@@ -23,18 +23,18 @@ const FullMenu = styled.div`
   color: #0073bb;
   vertical-align: bottom;
   position: fixed;
-  right: 75px;
-    .hoverOn {
-      text-decoration: underline;
-      color: red;
-    }
-    .hoverOff {
+  right: 75px;    
+  `;
 
-    }
-`;
 
 const MainContainer = styled.div`
   padding-left: 30px;
+    .hoverOn {
+      text-decoration: underline;
+    }
+    .hoverOff {
+      text-decoration: none;
+    }
 `;
 
 const PopularDishesContainer = styled.div`
@@ -46,9 +46,7 @@ const PopularDishesContainer = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   ::-webkit-scrollbar {display:none;}
-
   `;
-// align-items: flex-start;
 
 const PopularDishSpanHolder = styled.div`
   height: 175px;
@@ -61,7 +59,6 @@ const PopularDishSpanHolder = styled.div`
   border-width: .5px;
 `;
 
-//  doesn't seem to work when added below ... justify-content: flex-end;
 const TitleMenuContainer = styled.div`
   display: flex;
   align-items: flex-end;
@@ -156,18 +153,16 @@ class App extends React.Component {
 
   showModal() {
     this.setState({ show: true });
-    console.log('clicked showModal!');
   };
 
   hideModal() {
     this.setState({ show: false });
-    console.log('clicked hide modal');
   };
 
   updateFullMenuHover() {
     this.setState({ fullMenuHover: !this.state.fullMenuHover });
-    console.log('mouse enter or mouse leave!');
   }
+
   // *  /////////////////////////////////////////////////////
 
   componentDidMount() {
@@ -181,7 +176,7 @@ class App extends React.Component {
         <MainContainer id='main'>
           <TitleMenuContainer>
             <Title>Popular Dishes</Title>
-            <FullMenu onClick={this.showModal} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
+            <FullMenu onClick={this.showModal} onMouseEnter={this.updateFullMenuHover} onMouseLeave={this.updateFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
             <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
             <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
           </TitleMenuContainer>
