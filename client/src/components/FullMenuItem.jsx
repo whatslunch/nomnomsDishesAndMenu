@@ -39,6 +39,7 @@ const StarIcon = styled.img`
 const CameraIcon = styled.img`
   width: 3%;
   height: auto;
+  padding-left: 2%;
 `;
 
 class MenuItem extends React.Component {
@@ -80,13 +81,21 @@ class MenuItem extends React.Component {
   }
 
   render() {
-    let priceWithZero;
+    let priceWithZero = '' + this.props.menuItem.price;
 
     if (this.props.menuItem.price.toString().length === 3) {
       priceWithZero = '' + this.props.menuItem.price + '0';
-    } else {
-      priceWithZero = '' + this.props.menuItem.price;
     }
+
+    let photoWord = 'photos';
+    if (this.state.numberOfPhotos === 1) {
+      photoWord = 'photo';
+    }
+    let reviewsWord = 'reviews';
+    if (this.props.menuItem.reviews === 1) {
+      reviewsWord = 'review';
+    }
+
     return (
       <MainDiv>
         <div className="menuItemCol imgCol">
@@ -95,7 +104,7 @@ class MenuItem extends React.Component {
         <div className="menuItemCol">
           <div><b>{this.props.menuItem.name[0].toUpperCase() + this.props.menuItem.name.slice(1)}</b></div>
           <div>{this.props.menuItem.description[0].toUpperCase() + this.props.menuItem.description.slice(1) + '.'}</div>
-          <div><StarIcon src="https://s3.us-east-2.amazonaws.com/yumpsfphotos/small_0%403x.png" alt="reviews icon"></StarIcon> {this.props.menuItem.reviews} reviews <CameraIcon src="https://s3.us-east-2.amazonaws.com/yumpsfphotos/camericon2.png" alt="camera icon"></CameraIcon> {this.state.numberOfPhotos} photos </div>
+          <div><StarIcon src="https://s3.us-east-2.amazonaws.com/yumpsfphotos/small_0%403x.png" alt="reviews icon"></StarIcon> {this.props.menuItem.reviews + ' ' + reviewsWord + ' '} <CameraIcon src="https://s3.us-east-2.amazonaws.com/yumpsfphotos/camericon2.png" alt="camera icon"></CameraIcon> {this.state.numberOfPhotos + ' ' + photoWord + ' '} </div>
         </div>
         <div className="menuItemCol priceCol"><b>{'$' + priceWithZero}</b></div>
       </MainDiv>
