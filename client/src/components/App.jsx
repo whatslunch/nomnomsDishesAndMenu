@@ -24,6 +24,13 @@ const FullMenu = styled.div`
   vertical-align: bottom;
   position: fixed;
   right: 75px;
+    .hoverOn {
+      text-decoration: underline;
+      color: red;
+    }
+    .hoverOff {
+
+    }
 `;
 
 const MainContainer = styled.div`
@@ -94,12 +101,14 @@ class App extends React.Component {
       restaurantName: this.props.restaurantName,
       dishes: initialDishData,
       top10: initialDishData,
-      show: false
+      show: false,
+      fullMenuHover: false
     };
     this.getDishes = this.getDishes.bind(this);
     this.scroll = this.scroll.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.updateFullMenuHover = this.updateFullMenuHover.bind(this);
   }
 
   getDishes() {
@@ -148,6 +157,11 @@ class App extends React.Component {
     this.setState({ show: false });
     console.log('clicked hide modal');
   };
+
+  updateFullMenuHover() {
+    this.setState({ fullMenuHover: !this.state.fullMenuHover });
+    console.log('mouse enter or mouse leave!');
+  }
   // *  /////////////////////////////////////////////////////
 
   componentDidMount() {
@@ -161,7 +175,7 @@ class App extends React.Component {
         <MainContainer id='main'>
           <TitleMenuContainer>
             <Title>Popular Dishes</Title>
-            <FullMenu onClick={this.showModal}>Full Menu</FullMenu>
+            <FullMenu onClick={this.showModal} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
             <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
             <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
           </TitleMenuContainer>
@@ -183,7 +197,7 @@ class App extends React.Component {
       <MainContainer id="main">
         <TitleMenuContainer>
           <Title>Popular Dishes</Title>
-          <FullMenu onClick={this.showModal}>Full Menu</FullMenu>
+          <FullMenu onClick={this.showModal} onMouseEnter={this.updateFullMenuHover} onMouseLeave={this.updateFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
           <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
           <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
         </TitleMenuContainer>
