@@ -16,6 +16,7 @@ const Title = styled.div`
   font-family: verdana;
   font-weight: bold;
 `;
+Title.displayName = 'Title';
 
 const FullMenu = styled.div`
   font-family: arial;
@@ -25,10 +26,11 @@ const FullMenu = styled.div`
   position: fixed;
   right: 75px;    
   `;
+FullMenu.displayName = 'FullMenu';
 
 
 const MainContainer = styled.div`
-  padding-left: 30px;
+  padding-left: 15px;
     .hoverOn {
       text-decoration: underline;
     }
@@ -36,6 +38,8 @@ const MainContainer = styled.div`
       text-decoration: none;
     }
 `;
+MainContainer.displayName = 'MainContainer';
+
 
 const PopularDishesContainer = styled.div`
   padding-top: 30px;
@@ -47,6 +51,8 @@ const PopularDishesContainer = styled.div`
   overflow-y: hidden;
   ::-webkit-scrollbar {display:none;}
   `;
+PopularDishesContainer.displayName = 'PopularDishesContainer';
+
 
 const PopularDishSpanHolder = styled.div`
   height: 175px;
@@ -64,6 +70,7 @@ const TitleMenuContainer = styled.div`
   align-items: flex-end;
   position: fixed;
 `;
+TitleMenuContainer.displayName = 'TitleMenuContainer';
 
 const LeftArrow = styled.button`
   height: 20px;
@@ -73,6 +80,7 @@ const LeftArrow = styled.button`
   right: 15px;
   outline: none;
 `;
+LeftArrow.displayName = 'LeftArrow';
 
 const RightArrow = styled.button`
   height: 20px;
@@ -82,6 +90,9 @@ const RightArrow = styled.button`
   right: 40px;
   outline: none;
 `;
+RightArrow.displayName = 'RightArrow';
+
+
 
 //********************************************** */
 
@@ -105,7 +116,6 @@ class App extends React.Component {
     this.hideModal = this.hideModal.bind(this);
     this.setTrueFullMenuHover = this.setTrueFullMenuHover.bind(this);
     this.setFalseFullMenuHover = this.setFalseFullMenuHover.bind(this);
-
   }
 
   getDishes() {
@@ -203,7 +213,7 @@ class App extends React.Component {
       <MainContainer id="main">
         <TitleMenuContainer>
           <Title>Popular Dishes</Title>
-          <FullMenu onClick={this.showModal} onMouseEnter={this.setTrueFullMenuHover} onMouseLeave={this.setFalseFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
+          <FullMenu className="fullMenu" onClick={this.showModal} onMouseEnter={this.setTrueFullMenuHover} onMouseLeave={this.setFalseFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
           <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
           <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
         </TitleMenuContainer>

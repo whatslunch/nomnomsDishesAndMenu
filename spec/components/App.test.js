@@ -3,10 +3,9 @@ import jest from 'jest';
 import { shallow, mount } from 'enzyme';
 import App from '../../client/src/components/App.jsx';
 import PopularDish from '../../client/src/components/PopularDish.jsx';
+import Modal from '../../client/src/components/FullMenuModal.jsx';
 import { create } from "react-test-renderer";
 const axios = require.requireMock('axios');
-
-const $ = require.requireMock('jquery');
 
 describe('App', () => {
 
@@ -15,9 +14,63 @@ describe('App', () => {
     expect(wrapper.find(PopularDish)).toHaveLength(10);
   });
 
-  it('has a span with the className popularDish', () => {
+  it('renders a Modal component', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.contains(Modal)).toBe(true);
+  });
+
+  it('has a FullMenu styled component', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.exists('FullMenu')).toBe(true);
+  });
+
+  it('has a Title styled component', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.exists('TitleMenuContainer')).toBe(true);
+    expect(wrapper.exists('Title')).toBe(true);
+
+  });
+
+  it('has a mainContainer styled component', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.exists('MainContainer')).toBe(true);
+  });
+
+  it('has a PopularDishesContainer styled component', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.exists('PopularDishesContainer')).toBe(true);
+  });
+
+  it('has a component with the className hoverOff when Full Menu has not been hovered over', () => {
+    const wrapper = mount(<App />);
+    // expect(wrapper.exists('.hoverOn')).toBe(true);
+    expect(wrapper.exists('.hoverOff')).toBe(true);
+    expect(wrapper.exists('.hoverOn')).toBe(false);
+
+  });
+
+  it('has a component with the className hoverOn when Full Menu has been hovered over', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.exists('.hoverOff')).toBe(true);
+    expect(wrapper.exists('.hoverOn')).toBe(false);
+    wrapper.find('FullMenu').simulate('mouseEnter');
+    expect(wrapper.exists('.hoverOn')).toBe(true);
+    expect(wrapper.exists('.hoverOff')).toBe(false);
+    wrapper.find('FullMenu').simulate('mouseLeave');
+    expect(wrapper.exists('.hoverOff')).toBe(true);
+    expect(wrapper.exists('.hoverOn')).toBe(false);
+  });
+
+  it('updates state of show to true when Full Menu is clicked', () => {
+    const wrapper = mount(<App />);
+    expect(wrapper.state('show')).toBe(false);
+    wrapper.find('FullMenu').simulate('click');
+    expect(wrapper.state().show).toBe(true);
+  });
+
+  it('has a span with the className popularDishSpan', () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.exists('.popularDish')).toBe(true);
+    expect(wrapper.exists('.popularDishSpan')).toBe(true);
     expect(wrapper.exists('.populardish')).toBe(false);
     expect(wrapper.find('.unpopularDish').exists()).toBe(false);
   });
@@ -35,8 +88,8 @@ describe('App', () => {
   });
 
   it('has a state property of restaurantName with value of the restaurantName property that is passed in', () => {
-    const wrapper = shallow(<App restaurantName='nulla' />);
-    expect(wrapper.state().restaurantName).toBe('nulla');
+    const wrapper = shallow(<App restaurantName='est' />);
+    expect(wrapper.state().restaurantName).toBe('est');
     expect(wrapper.state().restaurantName).not.toBe('iure');
   });
 
@@ -45,6 +98,13 @@ describe('App', () => {
     expect(wrapper.instance().props.restaurantName).toBe('iure');
     expect(wrapper.instance().props.restaurantName).not.toBe('nulla');
   });
+
+  // OTHER TESTS I CAN WRITE FOR THIS COMPONENT...
+
+  // scrolling left and right shows additional components
+  // click of right arrow, scrolls right
+  // click of left arrow, scrolls left
+  // after component did mount, state updates 
 
   // IN PROGRESS...
   // it('should on componentDidMount, fetch Dishes and update state.dishes', async () => {
