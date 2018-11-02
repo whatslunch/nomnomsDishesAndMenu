@@ -25,4 +25,9 @@ var getPhotoData = function (photoId, callback) {
   connection.query(queryStr, [photoId], callback);
 };
 
-module.exports = { addRestaurant, getDishes, getPhotosForDish, getPhotoData };
+const getRestaurantName = function (restaurantId, callback) {
+  let queryStr = 'SELECT name FROM restaurants WHERE id = ?';
+  connection.query(queryStr, [restaurantId], callback);
+};
+
+module.exports = { addRestaurant, getDishes, getPhotosForDish, getPhotoData, getRestaurantName };

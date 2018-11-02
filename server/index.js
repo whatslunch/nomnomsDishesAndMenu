@@ -6,6 +6,24 @@ var app = express();
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.get('/:restaurant_id', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+app.get('/restaurants/:restaurant_id', (req, res) => {
+  var id = req.params.restaurant_id;
+  console.log('restaurantID form server>>', id);
+
+  db.getRestaurantName(id, (error, results) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      console.log('results from database>>>', results);
+      res.status(200).send(results);
+    }
+  });
+});
+
 app.get('/menus/:restaurantName', (request, response) => {
   // invoke database method and sends back results
   // express & .send already stringifies it, so you don't have to

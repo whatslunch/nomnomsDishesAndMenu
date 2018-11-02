@@ -94,15 +94,13 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      // when module gets hooked up to larger app, 
-      // it should have functionality that updates the state restaurantName/id
-      // on reload/componentDidMount, getDishes will be called to get the dishes for the given restaurant
-      // currently passin gin restaurant name where App Component is "called"/rendered to the DOM
-      restaurantName: this.props.restaurantName,
+      // if want to pass down restaurant name from Index.jsx, could do so here... but we are pulling from browswer url to integrate with team
+      // restaurantName: this.props.restaurantName,
+      restaurantName: 'est',
       dishes: initialDishData,
       top10: initialDishData,
       show: false,
-      fullMenuHover: false
+      fullMenuHover: false,
     };
     this.getDishes = this.getDishes.bind(this);
     this.scroll = this.scroll.bind(this);
@@ -112,14 +110,22 @@ class App extends React.Component {
   }
 
   getDishes() {
-    axios.get(`/menus/${this.state.restaurantName}`)
+    // first need to use the restaurantId in the url path, 
+    // then use it to get restaurantName, then get data based on restaurantName
+    const restaurantId = window.location.pathname.slice(1);
+
+    axios.get(`/restaurants/${restaurantId}`)
       .then(data => {
-        // console.log('data line 40>>>', data.data);
-        this.setState({ dishes: data.data });
-        var top10 = this.getTop10(data.data);
-        // console.log('top10>>>', top10);
-        this.setState({ top10: top10 });
-      })
+        this.setState({ restaurantName: data.data[0].name });
+        return axios.get(`/menus/${this.state.restaurantName}`)
+          .then(data => {
+            this.setState({ dishes: data.data });
+            var top10 = this.getTop10(data.data);
+            // console.log('top10>>>', top10);
+            this.setState({ top10: top10 });
+          })
+      });
+
   }
 
   getTop10(dishes) {
