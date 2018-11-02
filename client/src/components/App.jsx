@@ -174,36 +174,31 @@ class App extends React.Component {
             )}
           </PopularDishesContainer>
 
-          <Modal show={this.state.show} handleClose={this.hideModal} restaurantName={this.state.restaurantName} />
-
-          {/* <Modal show={this.state.show} handleClose={this.hideModal}>
-            <p className="menuTitle">Menu for {this.state.restaurantName}</p>
-            <p>Data</p>
-          </Modal> */}
-
-        </MainContainer>
-      );
-    } else {
-      return (
-        <MainContainer id='main'>
-          <TitleMenuContainer>
-            <Title>Popular Dishes</Title>
-            <FullMenu onClick={this.showModal}>Full Menu</FullMenu>
-            <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
-            <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
-          </TitleMenuContainer>
-
-          <PopularDishesContainer className='popDishesContainer'>
-            {this.state.top10.map((dishObj) => (
-              <PopularDishSpanHolder key={dishObj.id} id={dishObj.id} className='popularDishSpan'>
-                <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
-              </PopularDishSpanHolder>)
-            )}
-          </PopularDishesContainer>
+          <Modal show={this.state.show} handleClose={this.hideModal} restaurantName={this.state.restaurantName} fullMenu={this.state.dishes} />
 
         </MainContainer>
       );
     }
+    return (
+      <MainContainer id="main">
+        <TitleMenuContainer>
+          <Title>Popular Dishes</Title>
+          <FullMenu onClick={this.showModal}>Full Menu</FullMenu>
+          <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
+          <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
+        </TitleMenuContainer>
+
+        <PopularDishesContainer className='popDishesContainer'>
+          {this.state.top10.map((dishObj) => (
+            <PopularDishSpanHolder key={dishObj.id} id={dishObj.id} className='popularDishSpan'>
+              <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
+            </PopularDishSpanHolder>)
+          )}
+        </PopularDishesContainer>
+
+      </MainContainer>
+    );
+
   }
 }
 export default App;

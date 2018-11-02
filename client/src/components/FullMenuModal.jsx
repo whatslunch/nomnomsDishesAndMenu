@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import FullMenuItem from './FullMenuItem.jsx';
 
 
 const MainDiv = styled.div`
@@ -19,6 +20,7 @@ const MainDiv = styled.div`
     position: fixed;
     right: 0px;
     margin-right: 10%;
+    padding-top: 1%;
     color: white;
     font-weight: bold;
   }
@@ -41,12 +43,14 @@ const MainDiv = styled.div`
     position:fixed;
     background: rgba(20, 20, 20, 0.75);
     z-index: 8;
-    width: 80%;
-    height: auto;
-    top:50%;
+    width: 100%;
+    height: 100%;
+    top: 1%;
+    bottom: 1%;
     left:50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%);
   }
+  
 
   .menuTitle {
     text-align: left;
@@ -67,18 +71,22 @@ const MainDiv = styled.div`
   }
 `;
 
-const Modal = ({ handleClose, show, restaurantName }) => {
+const Modal = ({ handleClose, show, restaurantName, fullMenu }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
 
   return (
     <MainDiv className={showHideClassName}>
       <section className="modal-main">
-        <div className='rowAcrossTop'>
-          <div className='closeButton' onClick={handleClose}>Close X</div>
+        <div className="rowAcrossTop">
+          <div className="closeButton" onClick={handleClose}>Close X</div>
         </div>
-        <div className='modalContent'>
+        <div className="modalContent">
           <p className="menuTitle">Menu for {restaurantName[0].toUpperCase() + restaurantName.slice(1)}</p>
-          <p>Data</p>
+          <div className='MenuItemsContainer'>
+            {fullMenu.map(menuItem => (
+              <FullMenuItem menuItem={menuItem} key={menuItem.id} id={menuItem.id} className="fullMenucontainer" />)
+            )}
+          </div>
         </div>
       </section>
     </MainDiv>
