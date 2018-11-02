@@ -102,6 +102,14 @@ class PopularDish extends React.Component {
   }
 
   render() {
+    let photoWord = 'photos';
+    if (this.state.numberOfPhotos === 1) {
+      photoWord = 'photo';
+    }
+    let reviewsWord = 'reviews';
+    if (this.state.reviews === 1) {
+      reviewsWord = 'review';
+    }
 
     return (
       <MainDiv>
@@ -112,7 +120,7 @@ class PopularDish extends React.Component {
         <DetailWrapper>
           <b>{this.props.dish.name[0].toUpperCase() + this.props.dish.name.slice(1)}</b>
           <div className='numPhotosReviews'>
-            {this.state.numberOfPhotos} photos {"\u00B7"} {this.props.dish.reviews} reviews
+            {this.state.numberOfPhotos + " " + photoWord + " " + "\u00B7"} {this.props.dish.reviews} reviews
           </div>
         </DetailWrapper>
       </MainDiv>

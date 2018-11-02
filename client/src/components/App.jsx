@@ -1,5 +1,6 @@
 import React from 'react';
 import PopularDish from './PopularDish.jsx';
+import Modal from './FullMenuModal.jsx';
 import initialDishData from '../initialData.js';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -23,6 +24,13 @@ const FullMenu = styled.div`
   vertical-align: bottom;
   position: fixed;
   right: 75px;
+    .hoverOn {
+      text-decoration: underline;
+      color: red;
+    }
+    .hoverOff {
+
+    }
 `;
 
 const MainContainer = styled.div`
@@ -37,6 +45,8 @@ const PopularDishesContainer = styled.div`
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+  ::-webkit-scrollbar {display:none;}
+
   `;
 // align-items: flex-start;
 
@@ -90,14 +100,18 @@ class App extends React.Component {
       // currently passin gin restaurant name where App Component is "called"/rendered to the DOM
       restaurantName: this.props.restaurantName,
       dishes: initialDishData,
-      top10: initialDishData
+      top10: initialDishData,
+      show: false,
+      fullMenuHover: false
     };
     this.getDishes = this.getDishes.bind(this);
-    this.scroll = this.scroll.bind(this)
+    this.scroll = this.scroll.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+    this.updateFullMenuHover = this.updateFullMenuHover.bind(this);
   }
 
   getDishes() {
-
     axios.get(`/menus/${this.state.restaurantName}`)
       .then(data => {
         // console.log('data line 40>>>', data.data);
@@ -106,7 +120,6 @@ class App extends React.Component {
         // console.log('top10>>>', top10);
         this.setState({ top10: top10 });
       })
-
   }
 
   getTop10(dishes) {
@@ -128,18 +141,28 @@ class App extends React.Component {
     return sortedDishes.slice(0, 10);
   }
 
-  // scrollRight() {
-  //   console.log('clicked scroll right!');
-  // }
-  // scrollLeft() {
-  //   console.log('clicked scroll left!');
-  // }
-
+  // * methods for styling ////////////////////////////////////
   scroll(direction) {
     let far = $('.popDishesContainer').width() / 2 * direction;
     let pos = $('.popDishesContainer').scrollLeft() + far;
     $('.popDishesContainer').animate({ scrollLeft: pos }, 350)
   }
+
+  showModal() {
+    this.setState({ show: true });
+    console.log('clicked showModal!');
+  };
+
+  hideModal() {
+    this.setState({ show: false });
+    console.log('clicked hide modal');
+  };
+
+  updateFullMenuHover() {
+    this.setState({ fullMenuHover: !this.state.fullMenuHover });
+    console.log('mouse enter or mouse leave!');
+  }
+  // *  /////////////////////////////////////////////////////
 
   componentDidMount() {
     this.getDishes();
@@ -147,11 +170,34 @@ class App extends React.Component {
 
   render() {
 
+    if (this.state.show) {
+      return (
+        <MainContainer id='main'>
+          <TitleMenuContainer>
+            <Title>Popular Dishes</Title>
+            <FullMenu onClick={this.showModal} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
+            <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
+            <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
+          </TitleMenuContainer>
+
+          <PopularDishesContainer className='popDishesContainer'>
+            {this.state.top10.map((dishObj) => (
+              <PopularDishSpanHolder key={dishObj.id} id={dishObj.id} className='popularDishSpan'>
+                <PopularDish restaurantName={this.state.restaurantName} dish={dishObj} />
+              </PopularDishSpanHolder>)
+            )}
+          </PopularDishesContainer>
+
+          <Modal show={this.state.show} handleClose={this.hideModal} restaurantName={this.state.restaurantName} fullMenu={this.state.dishes} />
+
+        </MainContainer>
+      );
+    }
     return (
-      <MainContainer id='main'>
+      <MainContainer id="main">
         <TitleMenuContainer>
           <Title>Popular Dishes</Title>
-          <FullMenu>Full Menu</FullMenu>
+          <FullMenu onClick={this.showModal} onMouseEnter={this.updateFullMenuHover} onMouseLeave={this.updateFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
           <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
           <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
         </TitleMenuContainer>
@@ -163,8 +209,10 @@ class App extends React.Component {
             </PopularDishSpanHolder>)
           )}
         </PopularDishesContainer>
+
       </MainContainer>
     );
+
   }
 }
 export default App;
