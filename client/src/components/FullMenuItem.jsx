@@ -16,6 +16,11 @@ const MainDiv = styled.div`
 
   .imgCol{
     width: 10%;
+    img {
+      width: 80%;
+      height: auto;
+      padding: 7%;
+    }
   }
 
   .priceCol{
@@ -24,6 +29,16 @@ const MainDiv = styled.div`
     position: relative;
     top: 1%;
   }
+`;
+
+const StarIcon = styled.img`
+  width: 2.5%;
+  height: auto;
+`;
+
+const CameraIcon = styled.img`
+  width: 3%;
+  height: auto;
 `;
 
 class MenuItem extends React.Component {
@@ -74,11 +89,13 @@ class MenuItem extends React.Component {
     }
     return (
       <MainDiv>
-        <div className="menuItemCol imgCol">image</div>
+        <div className="menuItemCol imgCol">
+          <img src={this.state.imgurl} alt='menuItem photo'></img>
+        </div>
         <div className="menuItemCol">
           <div><b>{this.props.menuItem.name[0].toUpperCase() + this.props.menuItem.name.slice(1)}</b></div>
           <div>{this.props.menuItem.description[0].toUpperCase() + this.props.menuItem.description.slice(1) + '.'}</div>
-          <div>icon {this.props.menuItem.reviews} reviews icon {this.state.numberOfPhotos} photos </div>
+          <div><StarIcon src="https://s3.us-east-2.amazonaws.com/yumpsfphotos/small_0%403x.png" alt="reviews icon"></StarIcon> {this.props.menuItem.reviews} reviews <CameraIcon src="https://s3.us-east-2.amazonaws.com/yumpsfphotos/camericon2.png" alt="camera icon"></CameraIcon> {this.state.numberOfPhotos} photos </div>
         </div>
         <div className="menuItemCol priceCol"><b>{'$' + priceWithZero}</b></div>
       </MainDiv>

@@ -5,13 +5,14 @@ import FullMenuItem from './FullMenuItem.jsx';
 
 const MainDiv = styled.div`
   font-family: arial;
+  overflow: scroll;
 
   .modal{
     position: fixed;
     top: 0;
     left: 0;
     width:100%;
-    height: 100%;
+    height: auto;
     background: rgba(0, 0, 0, 0.6);
   }
 
@@ -44,7 +45,8 @@ const MainDiv = styled.div`
     background: rgba(20, 20, 20, 0.75);
     z-index: 8;
     width: 100%;
-    height: 100%;
+    height: auto;
+    overflow: scroll;
     top: 1%;
     bottom: 1%;
     left:50%;
