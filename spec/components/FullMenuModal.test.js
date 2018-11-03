@@ -98,17 +98,19 @@ describe('FullMenuModal', () => {
   ];
 
   const exampleRestaurantName = 'eligendi';
+  const handleCloseMock = jest.fn();
 
-  it('contains MainDiv', () => {
-    const wrapper = mount(<Modal fullMenu={dishes} restaurantName={exampleRestaurantName} show={false} />);
+  it('contains MainDiv and a modal class', () => {
+    const wrapper = mount(<Modal fullMenu={dishes} restaurantName={exampleRestaurantName} show={false} handleClose={handleCloseMock} />);
     expect(wrapper.exists('MainDiv')).toBe(true);
     expect(wrapper.exists('.modal')).toBe(true);
-
   });
 
-  // handleClose = { this.hideModal }
-  // TESTS TO WRITE
-  // check that all the rendered prices have two decimal points rendered
-  // test if it receives props that it,
+  it('calls handleClose method when Close Button is clicked', () => {
+    const wrapper = mount(<Modal fullMenu={dishes} restaurantName={exampleRestaurantName} show={false} handleClose={handleCloseMock} />);
+    wrapper.find('.closeButton').simulate('click');
+    expect(handleCloseMock).toBeCalled();
+  });
+
 });
 
