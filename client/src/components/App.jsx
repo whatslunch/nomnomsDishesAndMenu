@@ -127,7 +127,7 @@ class App extends React.Component {
             var top10 = this.getTop10(data.data);
             // console.log('top10>>>', top10);
             this.setState({ top10: top10 });
-          })
+          });
       });
 
   }
@@ -153,7 +153,7 @@ class App extends React.Component {
 
   // * methods for styling ////////////////////////////////////
   scroll(direction) {
-    console.log('SCROLL WAS INVOKED');
+    // console.log('scroll WAS INVOKED');
     let far = $('.popDishesContainer').width() / 2 * direction;
     let pos = $('.popDishesContainer').scrollLeft() + far;
     $('.popDishesContainer').animate({ scrollLeft: pos }, 350)
@@ -190,7 +190,7 @@ class App extends React.Component {
             <Title>Popular Dishes</Title>
             <FullMenu onClick={this.showModal} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
             <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
-            <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
+            <LeftArrow className="leftArrow" onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
           </TitleMenuContainer>
 
           <PopularDishesContainer className='popDishesContainer'>
