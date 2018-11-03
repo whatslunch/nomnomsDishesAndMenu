@@ -91,11 +91,7 @@ const RightArrow = styled.button`
   outline: none;
 `;
 RightArrow.displayName = 'RightArrow';
-
-
-
 //********************************************** */
-
 
 class App extends React.Component {
   constructor(props) {

@@ -72,6 +72,7 @@ const MainDiv = styled.div`
     background: white;
   }
 `;
+MainDiv.displayName = 'MainDiv';
 
 const Modal = ({ handleClose, show, restaurantName, fullMenu }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
