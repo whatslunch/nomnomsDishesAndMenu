@@ -12,7 +12,6 @@ var getRandomInt = max => {
   return Math.floor(Math.random() * Math.floor(max));
 };
 
-
 // SEED restaurant table ********************************************************************
 var randomRestName;
 var randomDishName;
@@ -32,11 +31,8 @@ arrOfRestNames.forEach((name) => {
     if (err) {
       throw err;
     }
-    console.log('restaurant info was appended to file!');
   });
 });
-
-
 
 //  SEED dishes table ***********************************************************************
 var randomNum;
@@ -63,12 +59,9 @@ while (y < 100) {
       if (err) {
         throw err;
       }
-      console.log('dish info was appended to the file!');
     });
   }
-
   y++;
-
 }
 
 // SEED photos table *************************************************************************
@@ -79,11 +72,9 @@ var photoURLs = [];
 for (var i = 1; i < 36; i++) {
   photoURLs.push(filePathBase + i + '.jpeg');
 }
-
 // i have almost 1500 dishes (15 per restaurant, and 100 restaurants), want to be able to have 2 photos per dish, so should make  3000 photo entries
 var randomPhotoURL;
 var caption;
-
 
 for (var m = 1; m < 3000; m++) {
   randomPhotoURL = photoURLs[getRandomInt(34)];
@@ -93,14 +84,12 @@ for (var m = 1; m < 3000; m++) {
     if (err) {
       throw err;
     }
-    console.log('photo info was appended to the file!');
   });
 
 }
 
 // SEED dishes_photos table *************************************************************************
-
-// I think I have it set up so that there are at least some records that demonstrate the many to many relationship
+// set up so that there are at least some records that demonstrate the many to many relationship
 // and no records repeat each other
 
 // add photo ids 1 - 1484 & dishes ids 1 - 1484
@@ -130,7 +119,3 @@ for (var n = 1; n < 1000; n++) {
   });
 
 }
-
-
-
-
