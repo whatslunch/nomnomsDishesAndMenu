@@ -6,7 +6,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import $ from 'jquery';
 
-//*******STYLING *********************************/
 const Title = styled.div`
   text-align: left;
   padding-left: 10px;
@@ -28,7 +27,6 @@ const FullMenu = styled.div`
   `;
 FullMenu.displayName = 'FullMenu';
 
-
 const MainContainer = styled.div`
   padding-left: 15px;
     .hoverOn {
@@ -39,7 +37,6 @@ const MainContainer = styled.div`
     }
 `;
 MainContainer.displayName = 'MainContainer';
-
 
 const PopularDishesContainer = styled.div`
   padding-top: 30px;
@@ -90,7 +87,6 @@ const RightArrow = styled.button`
   outline: none;
 `;
 RightArrow.displayName = 'RightArrow';
-//********************************************** */
 
 class App extends React.Component {
   constructor(props) {
@@ -153,7 +149,6 @@ class App extends React.Component {
 
   // * methods for styling ////////////////////////////////////
   scroll(direction) {
-    // console.log('scroll WAS INVOKED');
     let far = $('.popDishesContainer').width() / 2 * direction;
     let pos = $('.popDishesContainer').scrollLeft() + far;
     $('.popDishesContainer').animate({ scrollLeft: pos }, 350)
@@ -161,7 +156,6 @@ class App extends React.Component {
 
   showModal() {
     this.setState({ show: true });
-    console.log('SHOW MODAL GETTING INVOKED');
   };
 
   hideModal() {
