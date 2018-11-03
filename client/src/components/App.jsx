@@ -158,6 +158,7 @@ class App extends React.Component {
 
   // * methods for styling ////////////////////////////////////
   scroll(direction) {
+    console.log('SCROLL WAS INVOKED');
     let far = $('.popDishesContainer').width() / 2 * direction;
     let pos = $('.popDishesContainer').scrollLeft() + far;
     $('.popDishesContainer').animate({ scrollLeft: pos }, 350)
@@ -165,6 +166,7 @@ class App extends React.Component {
 
   showModal() {
     this.setState({ show: true });
+    console.log('SHOW MODAL GETTING INVOKED');
   };
 
   hideModal() {

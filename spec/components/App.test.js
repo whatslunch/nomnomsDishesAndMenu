@@ -1,11 +1,12 @@
 import React from 'react';
-import jest from 'jest';
+import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 import App from '../../client/src/components/App.jsx';
 import PopularDish from '../../client/src/components/PopularDish.jsx';
 import Modal from '../../client/src/components/FullMenuModal.jsx';
 import { create } from "react-test-renderer";
 const axios = require.requireMock('axios');
+import jest from 'jest-mock';
 
 describe('App', () => {
 
@@ -99,12 +100,26 @@ describe('App', () => {
     expect(wrapper.instance().props.restaurantName).not.toBe('nulla');
   });
 
-  // OTHER TESTS I CAN WRITE FOR THIS COMPONENT...
+  // NOT WORKING...even though scroll method is getting invoked...spy not tracking
+  // it('invokes scroll when you click on arrow left', () => {
+  // const wrapper = mount(<App />);
+  // const spy = jest.fn(wrapper, 'scroll');
+  // wrapper.find('LeftArrow').simulate('click');
+  // expect(spy).toHaveBeenCalled();
 
-  // scrolling left and right shows additional components
-  // click of right arrow, scrolls right
-  // click of left arrow, scrolls left
-  // after component did mount, state updates 
+  // const wrapper = mount(<App />);
+  // const spy = jest.spyOn(wrapper.instance(), 'scroll');
+  // wrapper.find('FullMenu').simulate('click');
+  // expect(spy).toHaveBeenCalled();
+  // });
+
+  // ALSO doesn't work...
+  // it('calls showModal when FullMenu is clicked', () => {
+  //   const wrapper = mount(<App />);
+  //   const mockshowModal = jest.fn(wrapper.showModal);
+  //   wrapper.find('FullMenu').simulate('click');
+  //   expect(mockshowModal).toBeCalled();
+  // });
 
   // IN PROGRESS...
   // it('should on componentDidMount, fetch Dishes and update state.dishes', async () => {
