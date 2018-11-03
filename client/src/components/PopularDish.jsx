@@ -3,6 +3,7 @@
 import React from 'react';
 import $ from 'jquery';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const MainDiv = styled.div`
 display: flex;
@@ -69,46 +70,49 @@ const DetailWrapper = styled.div`
 `;
 DetailWrapper.displayName = 'DetailWrapper';
 
-
-
-
-
 class PopularDish extends React.Component {
   constructor(props) {
     super(props);
-
-
-
     this.state = {
       numberOfPhotos: 0,
       imgurl: '',
-      imgCaption: ''
     };
     this.getPhotoData = this.getPhotoData.bind(this);
   }
 
   getPhotoData() {
-    $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`, {
-      method: 'GET',
-      success: (data) => {
-        // console.log('data>>>>', data);
-        this.setState({ numberOfPhotos: data.length });
-        // console.log('photos_id from first record>>>,', data[0].photos_id);
-        $.ajax(`/photos/${data[0].photos_id}`, {
-          success: (photoData) => {
-            // console.log('photoData>>>', photoData);
-            this.setState({ imgurl: photoData[0].url, impgCaption: photoData[0].caption });
-          },
-          error: () => {
-            console.log('error from second ajax');
-          }
-        });
-      },
-      error: () => {
-        console.log('error from getPhotoData 1st ajax request');
-      }
-    });
+    axios.get(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`)
+      .then(data => {
+        this.setState({ numberOfPhotos: data.data.length });
+        return axios.get(`/photos/${data.data[0].photos_id}`)
+          .then(photoData => {
+            this.setState({ imgurl: photoData.data[0].url });
+          });
+
+      });
   }
+
+  // REFACTORED FROM USING AJAX..
+  // $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.dish.id}/photos`, {
+  //   method: 'GET',
+  //   success: (data) => {
+  //     // console.log('data>>>>', data);
+  //     this.setState({ numberOfPhotos: data.length });
+  //     // console.log('photos_id from first record>>>,', data[0].photos_id);
+  //     $.ajax(`/photos/${data[0].photos_id}`, {
+  //       success: (photoData) => {
+  //         // console.log('photoData>>>', photoData);
+  //         this.setState({ imgurl: photoData[0].url, impgCaption: photoData[0].caption });
+  //       },
+  //       error: () => {
+  //         console.log('error from second ajax');
+  //       }
+  //     });
+  //   },
+  //   error: () => {
+  //     console.log('error from getPhotoData 1st ajax request');
+  //   }
+  // });
 
   componentDidMount() {
     this.getPhotoData();

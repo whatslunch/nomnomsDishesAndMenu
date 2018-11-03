@@ -53,7 +53,6 @@ const PopularDishesContainer = styled.div`
   `;
 PopularDishesContainer.displayName = 'PopularDishesContainer';
 
-
 const PopularDishSpanHolder = styled.div`
   height: 175px;
   width: 175px;
