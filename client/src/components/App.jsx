@@ -16,6 +16,7 @@ const Title = styled.div`
   font-family: verdana;
   font-weight: bold;
 `;
+Title.displayName = 'Title';
 
 const FullMenu = styled.div`
   font-family: arial;
@@ -23,19 +24,22 @@ const FullMenu = styled.div`
   color: #0073bb;
   vertical-align: bottom;
   position: fixed;
-  right: 75px;
-    .hoverOn {
-      text-decoration: underline;
-      color: red;
-    }
-    .hoverOff {
+  right: 75px;    
+  `;
+FullMenu.displayName = 'FullMenu';
 
-    }
-`;
 
 const MainContainer = styled.div`
-  padding-left: 30px;
+  padding-left: 15px;
+    .hoverOn {
+      text-decoration: underline;
+    }
+    .hoverOff {
+      text-decoration: none;
+    }
 `;
+MainContainer.displayName = 'MainContainer';
+
 
 const PopularDishesContainer = styled.div`
   padding-top: 30px;
@@ -46,9 +50,9 @@ const PopularDishesContainer = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   ::-webkit-scrollbar {display:none;}
-
   `;
-// align-items: flex-start;
+PopularDishesContainer.displayName = 'PopularDishesContainer';
+
 
 const PopularDishSpanHolder = styled.div`
   height: 175px;
@@ -61,12 +65,12 @@ const PopularDishSpanHolder = styled.div`
   border-width: .5px;
 `;
 
-//  doesn't seem to work when added below ... justify-content: flex-end;
 const TitleMenuContainer = styled.div`
   display: flex;
   align-items: flex-end;
   position: fixed;
 `;
+TitleMenuContainer.displayName = 'TitleMenuContainer';
 
 const LeftArrow = styled.button`
   height: 20px;
@@ -76,6 +80,7 @@ const LeftArrow = styled.button`
   right: 15px;
   outline: none;
 `;
+LeftArrow.displayName = 'LeftArrow';
 
 const RightArrow = styled.button`
   height: 20px;
@@ -85,41 +90,47 @@ const RightArrow = styled.button`
   right: 40px;
   outline: none;
 `;
-
+RightArrow.displayName = 'RightArrow';
 //********************************************** */
-
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // when module gets hooked up to larger app, 
-      // it should have functionality that updates the state restaurantName/id
-      // on reload/componentDidMount, getDishes will be called to get the dishes for the given restaurant
-      // currently passin gin restaurant name where App Component is "called"/rendered to the DOM
-      restaurantName: this.props.restaurantName,
+      // if want to pass down restaurant name from Index.jsx, could do so here... but we are pulling from browswer url to integrate with team
+      // restaurantName: this.props.restaurantName,
+      restaurantName: 'est',
       dishes: initialDishData,
       top10: initialDishData,
       show: false,
-      fullMenuHover: false
+      fullMenuHover: false,
     };
     this.getDishes = this.getDishes.bind(this);
     this.scroll = this.scroll.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    this.updateFullMenuHover = this.updateFullMenuHover.bind(this);
+    this.setTrueFullMenuHover = this.setTrueFullMenuHover.bind(this);
+    this.setFalseFullMenuHover = this.setFalseFullMenuHover.bind(this);
   }
 
   getDishes() {
-    axios.get(`/menus/${this.state.restaurantName}`)
+    // first need to use the restaurantId in the url path, 
+    // then use it to get restaurantName, then get data based on restaurantName
+    const restaurantId = window.location.pathname.slice(1);
+
+    axios.get(`/restaurants/${restaurantId}`)
       .then(data => {
-        // console.log('data line 40>>>', data.data);
-        this.setState({ dishes: data.data });
-        var top10 = this.getTop10(data.data);
-        // console.log('top10>>>', top10);
-        this.setState({ top10: top10 });
-      })
+        this.setState({ restaurantName: data.data[0].name });
+        return axios.get(`/menus/${this.state.restaurantName}`)
+          .then(data => {
+            this.setState({ dishes: data.data });
+            var top10 = this.getTop10(data.data);
+            // console.log('top10>>>', top10);
+            this.setState({ top10: top10 });
+          })
+      });
+
   }
 
   getTop10(dishes) {
@@ -143,6 +154,7 @@ class App extends React.Component {
 
   // * methods for styling ////////////////////////////////////
   scroll(direction) {
+    console.log('SCROLL WAS INVOKED');
     let far = $('.popDishesContainer').width() / 2 * direction;
     let pos = $('.popDishesContainer').scrollLeft() + far;
     $('.popDishesContainer').animate({ scrollLeft: pos }, 350)
@@ -150,18 +162,20 @@ class App extends React.Component {
 
   showModal() {
     this.setState({ show: true });
-    console.log('clicked showModal!');
+    console.log('SHOW MODAL GETTING INVOKED');
   };
 
   hideModal() {
-    this.setState({ show: false });
-    console.log('clicked hide modal');
+    this.setState({ show: false, fullMenuHover: false });
   };
 
-  updateFullMenuHover() {
-    this.setState({ fullMenuHover: !this.state.fullMenuHover });
-    console.log('mouse enter or mouse leave!');
+  setTrueFullMenuHover() {
+    this.setState({ fullMenuHover: true });
   }
+  setFalseFullMenuHover() {
+    this.setState({ fullMenuHover: false });
+  }
+
   // *  /////////////////////////////////////////////////////
 
   componentDidMount() {
@@ -190,14 +204,14 @@ class App extends React.Component {
 
           <Modal show={this.state.show} handleClose={this.hideModal} restaurantName={this.state.restaurantName} fullMenu={this.state.dishes} />
 
-        </MainContainer>
+        </MainContainer >
       );
     }
     return (
       <MainContainer id="main">
         <TitleMenuContainer>
           <Title>Popular Dishes</Title>
-          <FullMenu onClick={this.showModal} onMouseEnter={this.updateFullMenuHover} onMouseLeave={this.updateFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
+          <FullMenu className="fullMenu" onClick={this.showModal} onMouseEnter={this.setTrueFullMenuHover} onMouseLeave={this.setFalseFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
           <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
           <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
         </TitleMenuContainer>

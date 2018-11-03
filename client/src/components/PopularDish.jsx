@@ -8,12 +8,16 @@ const MainDiv = styled.div`
 display: flex;
 flex-direction: column;
 `;
+MainDiv.displayName = 'MainDiv';
+
 
 const ImageWrapper = styled.div`
   height: 66%;
   position: relative;
   z-index: 0;
 `;
+ImageWrapper.displayName = 'ImageWrapper';
+
 
 const Price = styled.div`
   color: white;
@@ -30,6 +34,8 @@ const Price = styled.div`
   z-index: 5;
   border-radius: 3px;
   `;
+Price.displayName = 'Price';
+
 
 const Image = styled.img`
   width: 100%;
@@ -41,6 +47,8 @@ const Image = styled.img`
   position: relative;
   z-index: 1;
   `;
+Image.displayName = 'Image';
+
 
 const DetailWrapper = styled.div`
   width: 100%;
@@ -59,6 +67,8 @@ const DetailWrapper = styled.div`
     font-size: 14px;
   }
 `;
+DetailWrapper.displayName = 'DetailWrapper';
+
 
 
 
@@ -66,6 +76,9 @@ const DetailWrapper = styled.div`
 class PopularDish extends React.Component {
   constructor(props) {
     super(props);
+
+
+
     this.state = {
       numberOfPhotos: 0,
       imgurl: '',
@@ -102,25 +115,33 @@ class PopularDish extends React.Component {
   }
 
   render() {
+
+    const { restaurantName, dish } = this.props;
+
     let photoWord = 'photos';
     if (this.state.numberOfPhotos === 1) {
       photoWord = 'photo';
     }
     let reviewsWord = 'reviews';
-    if (this.state.reviews === 1) {
+    if (dish.reviews === 1) {
       reviewsWord = 'review';
+    }
+
+    let priceWithZero = '' + dish.price;
+    if (dish.price.toString().length === 3) {
+      priceWithZero = '' + dish.price + '0';
     }
 
     return (
       <MainDiv>
         <ImageWrapper>
           <Image src={this.state.imgurl} alt="picture of food"></Image>
-          <Price>{'$' + this.props.dish.price}</Price>
+          <Price>{'$' + priceWithZero}</Price>
         </ImageWrapper>
         <DetailWrapper>
-          <b>{this.props.dish.name[0].toUpperCase() + this.props.dish.name.slice(1)}</b>
+          <b>{dish.name[0].toUpperCase() + dish.name.slice(1)}</b>
           <div className='numPhotosReviews'>
-            {this.state.numberOfPhotos + " " + photoWord + " " + "\u00B7"} {this.props.dish.reviews} reviews
+            {this.state.numberOfPhotos + " " + photoWord + " " + "\u00B7"} {dish.reviews + ' ' + reviewsWord}
           </div>
         </DetailWrapper>
       </MainDiv>

@@ -11,7 +11,7 @@
     "react-dev": "webpack -d --watch",
     "start": "nodemon server/index.js",
     "seed-database": "node database/faker.js && mysql -u root < database/schema.sql",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -44,8 +44,11 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "jest-mock": "^23.2.0",
+    "prop-types": "^15.6.2",
     "react-test-renderer": "^16.6.0",
     "regenerator-runtime": "^0.12.1",
+    "sinon": "^7.1.1",
     "styled-components": "^4.0.3",
     "webpack-cli": "^3.1.2"
   },
