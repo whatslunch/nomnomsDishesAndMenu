@@ -30,4 +30,4 @@ const getRestaurantName = function (restaurantId, callback) {
   connection.query(queryStr, [restaurantId], callback);
 };
 
-module.exports = { addRestaurant, getDishes, getPhotosForDish, getPhotoData, getRestaurantName };
+module.exports = { addRestaurant, getDishes, getPhotosForDish, getPhotoData, getRestaurantName, connection };
