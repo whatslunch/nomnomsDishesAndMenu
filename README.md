@@ -17,7 +17,8 @@
  - npm run react-dev to run webpack
  - npm start to run server
  - in database/index.js update default user and pw if needed
- - run npm seed-database to seed the database (will add insert lines to schema.sql file and run schema.sql file to create and seed database -- seeds data for 100 restaurants with 15 dishes per restaurant and additional data)
+ - run npm create-database to run schema file and create database
+ - run npm seed-database to seed the database (seeds data for 100 restaurants with 15 dishes per restaurant and additional data)
  - to run app for a given restaurant, enter restaurant ids 0 - 99 in URL pathname OR
  - if prefer to call App with restaurantName, can uncomment line 97 in App.jsx and pass down restaurantName as prop in index.jsx
 
