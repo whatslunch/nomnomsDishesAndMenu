@@ -6,6 +6,54 @@ import axios from 'axios';
 import styled from 'styled-components';
 import $ from 'jquery';
 
+const FullMenu = styled.div`
+  font-family: arial;
+  font-size: 14px;
+  color: #0073bb;
+  vertical-align: bottom;
+  /* position: fixed; */
+  /* right: 75px;     */
+  `;
+FullMenu.displayName = 'FullMenu';
+
+const TitleMenuContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  /* position: fixed; */
+  flex-direction: row;
+  justify-content: space-between;
+`;
+TitleMenuContainer.displayName = 'TitleMenuContainer';
+
+const FullMenuAndArrowsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+const ArrowsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: white;
+`;
+const LeftArrow = styled.button`
+  height: 20px;
+  width: 30px;
+  padding-left: 2px;
+  border: none;
+  outline: none;
+`;
+LeftArrow.displayName = 'LeftArrow';
+const RightArrow = styled.button`
+  height: 20px;
+  width: 30px;
+  border: none;
+  /* position: fixed; */
+  /* right: 40px; */
+  outline: none;
+`;
+RightArrow.displayName = 'RightArrow';
+
+
 const Title = styled.div`
   text-align: left;
   padding-left: 10px;
@@ -16,16 +64,6 @@ const Title = styled.div`
   font-weight: bold;
 `;
 Title.displayName = 'Title';
-
-const FullMenu = styled.div`
-  font-family: arial;
-  font-size: 14px;
-  color: #0073bb;
-  vertical-align: bottom;
-  position: fixed;
-  right: 75px;    
-  `;
-FullMenu.displayName = 'FullMenu';
 
 const MainContainer = styled.div`
   padding-left: 15px;
@@ -60,33 +98,6 @@ const PopularDishSpanHolder = styled.div`
   border-color: #999999;
   border-width: .5px;
 `;
-
-const TitleMenuContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  position: fixed;
-`;
-TitleMenuContainer.displayName = 'TitleMenuContainer';
-
-const LeftArrow = styled.button`
-  height: 20px;
-  width: 30px;
-  border: none;
-  position: fixed;
-  right: 15px;
-  outline: none;
-`;
-LeftArrow.displayName = 'LeftArrow';
-
-const RightArrow = styled.button`
-  height: 20px;
-  width: 30px;
-  border: none;
-  position: fixed;
-  right: 40px;
-  outline: none;
-`;
-RightArrow.displayName = 'RightArrow';
 
 class App extends React.Component {
   constructor(props) {
@@ -204,9 +215,14 @@ class App extends React.Component {
       <MainContainer id="main">
         <TitleMenuContainer>
           <Title>Popular Dishes</Title>
-          <FullMenu className="fullMenu" onClick={this.showModal} onMouseEnter={this.setTrueFullMenuHover} onMouseLeave={this.setFalseFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
-          <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
-          <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
+          <FullMenuAndArrowsContainer>
+            <FullMenu className="fullMenu" onClick={this.showModal} onMouseEnter={this.setTrueFullMenuHover} onMouseLeave={this.setFalseFullMenuHover} className={this.state.fullMenuHover ? 'hoverOn' : 'hoverOff'}>Full Menu</FullMenu>
+            <ArrowsContainer>
+              <RightArrow onClick={this.scroll.bind(null, -1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollLeft.png" alt="scroll right icon" width="100%" height="100%"></img></RightArrow>
+              <LeftArrow onClick={this.scroll.bind(null, 1)}><img src="https://s3.us-east-2.amazonaws.com/yelpsfphotos/scrollRight.png" alt="scroll left icon" width="100%" height="100%"></img></LeftArrow>
+            </ArrowsContainer>
+          </FullMenuAndArrowsContainer>
+
         </TitleMenuContainer>
 
         <PopularDishesContainer className='popDishesContainer'>
