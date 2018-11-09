@@ -1,9 +1,9 @@
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-  host: 'localhost',
+  host: '172.17.0.2',
   database: 'yumpSF',
-  user: 'root'
+  user: 'root',
 });
 
 var addRestaurant = function (name, callback) {
