@@ -124,3 +124,5 @@ const db = require('./index.js');
   }
 
 }());
+
+db.connection.end();

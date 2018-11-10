@@ -9,7 +9,7 @@
   },
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "start": "node server/index.js",
+    "start": "node database/faker.js && node server/index.js",
     "create-database": "mysql -u root < database/schema.sql",
     "seed-database": "node database/faker.js",
     "test": "jest --coverage"
