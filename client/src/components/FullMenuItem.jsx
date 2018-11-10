@@ -60,13 +60,13 @@ class MenuItem extends React.Component {
   }
 
   getPhotoData() {
-    $.ajax(`/menus/${this.props.restaurantName}/dishes/${this.props.menuItem.id}/photos`, {
+    $.ajax(`http://18.188.31.198/menus/${this.props.restaurantName}/dishes/${this.props.menuItem.id}/photos`, {
       method: 'GET',
       success: (data) => {
         // console.log('data>>>>', data);
         this.setState({ numberOfPhotos: data.length });
         // console.log('photos_id from first record>>>,', data[0].photos_id);
-        $.ajax(`/photos/${data[0].photos_id}`, {
+        $.ajax(`http://18.188.31.198/photos/${data[0].photos_id}`, {
           success: (photoData) => {
             // console.log('photoData>>>', photoData);
             this.setState({ imgurl: photoData[0].url, impgCaption: photoData[0].caption });
