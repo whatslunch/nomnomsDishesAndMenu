@@ -38,3 +38,13 @@ npm install
 ## Acknowledgements
 - Thanks to everyone on the YumpSF team for builing awesome modules that bring to life the YumpSF verison of the Yelp restaurant page user experience! 
 
+## Endpoints
+
+| Action        | Method        | Endpoint                      | Purpose              |
+| ------------- | ------------- | ----------------------------- | -------------------- |
+| Create        | POST          | /restaurants/:restaurants_id  | Insert new row       |
+| Read(All)     | GET           | /restaurants/:restaurant_id   | Get all eows         |
+| Read(one)     | GET           | /:restaurant_id               | Get one row          |                     
+| Update        | PUT           | /restaurants/:restaurants_id  | Update one row       |                     
+| Delete        | DELETE        | /restaurants/:restaurants_id  | Delete one row       |                     
+
