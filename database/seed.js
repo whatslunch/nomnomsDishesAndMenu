@@ -22,7 +22,7 @@ stream.on('drain', () => {
 write();
 
 function write() {
-  while (i < 10) {
+  while (i < 10000000) {
     j = 0;
     const obj = {};
     obj.restaurantID = i;
