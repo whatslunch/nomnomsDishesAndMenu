@@ -1,14 +1,18 @@
-var express = require('express');
-var path = require('path');
-var db = require('../database/index.js');
+const express = require('express');
+const path = require('path');
+const db = require('../database/index.js');
 
-var app = express();
+var bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
 
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -17,7 +21,7 @@ app.get('/:restaurant_id', (req, res) => {
 });
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  var id = req.params.restaurant_id;
+  const id = req.params.restaurant_id;
   // console.log('restaurantID form server>>', id);
 
   db.getRestaurantName(id, (error, results) => {
@@ -35,7 +39,7 @@ app.get('/menus/:restaurantName', (request, response) => {
   // express & .send already stringifies it, so you don't have to
 
   // console.log('should be the restaurantname in the URL>>>>', request.params.restaurantName);
-  var restaurantName = request.params.restaurantName;
+  const restaurantName = request.params.restaurantName;
 
   db.getDishes(restaurantName, (error, results) => {
     if (error) {
@@ -44,14 +48,12 @@ app.get('/menus/:restaurantName', (request, response) => {
       response.status(200).send(results);
     }
   });
-
 });
 
 // the length of results we get back tells us how many different photos there are for the given dish at the given restaurant
 app.get('/menus/:restaurantName/dishes/:dishId/photos', (request, response) => {
-
-  var restaurantName = request.params.restaurantName;
-  var dishId = request.params.dishId;
+  const restaurantName = request.params.restaurantName;
+  const dishId = request.params.dishId;
   // console.log('dishID being passed in with ajax request>>>', dishId);
 
   db.getPhotosForDish(restaurantName, dishId, (error, results) => {
@@ -61,13 +63,11 @@ app.get('/menus/:restaurantName/dishes/:dishId/photos', (request, response) => {
       response.status(200).send(results);
     }
   });
-
 });
 
 // use the id of the first record returned from photos, to search for its url
 app.get('/photos/:photoid', (request, response) => {
-
-  var photoId = request.params.photoid;
+  const photoId = request.params.photoid;
 
   db.getPhotoData(photoId, (error, results) => {
     if (error) {
@@ -76,7 +76,37 @@ app.get('/photos/:photoid', (request, response) => {
       response.status(200).send(results);
     }
   });
+});
 
+app.post('/restaurants/:restaurantsID', (req, res) => {
+  db.addRestaurant(req.body.name, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.put('/restaurants/:restaurantsID', (req, res) => {
+  db.updateRestaurant(req.body.name, req.body.id, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.delete('/restaurants/:restaurantsID', (req, res) => {
+  console.log(req.body.name, req.body.id);
+  db.deleteRestaurant(req.body.id, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 app.listen(2000, () => {
