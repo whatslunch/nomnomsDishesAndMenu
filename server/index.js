@@ -1,6 +1,8 @@
+require('newrelic');
 const express = require('express');
 const path = require('path');
 const db = require('../database/index.js');
+const NonReldb = require('./../nonRelationalDB/index.js');
 
 var bodyParser = require('body-parser');
 const app = express();
@@ -24,7 +26,7 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id;
   // console.log('restaurantID form server>>', id);
 
-  db.getRestaurantName(id, (error, results) => {
+  NonReldb.getRestaurantName(id, (error, results) => {
     if (error) {
       res.status(500).send(error.message);
     } else {
@@ -41,7 +43,7 @@ app.get('/menus/:restaurantName', (request, response) => {
   // console.log('should be the restaurantname in the URL>>>>', request.params.restaurantName);
   const restaurantName = request.params.restaurantName;
 
-  db.getDishes(restaurantName, (error, results) => {
+  NonReldb.getDishes(restaurantName, (error, results) => {
     if (error) {
       response.status(500).send(error.message);
     } else {
